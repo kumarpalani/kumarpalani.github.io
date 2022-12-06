@@ -1,0 +1,47 @@
+var w,h,Custemwidth,Custemheight,scale1;
+var defW = 680, defH = 640;
+
+$(document).ready(function(){
+	w = window.innerWidth;
+	h = window.innerHeight;
+	Custemwidth=parseInt($('#wrapper').css('width'));
+	Custemheight=parseInt($('#wrapper').css('height'));
+	
+	var leftv = (window.innerWidth-Custemwidth)/2;
+	var topv = (window.innerHeight-Custemheight)/2;
+	$('#wrapper').css({'left': leftv+'px', 'top': topv+'px'});
+	
+	$(window).on('resize', function(){
+		w = window.innerWidth;
+		h = window.innerHeight;
+		
+		if(w < h)
+		{
+			scale1 = window.innerWidth/Custemwidth;
+		}
+		else
+		{
+			scale1 = window.innerWidth/Custemwidth;
+			if(Custemheight*scale1>h)
+			{
+				scale1 = window.innerHeight/Custemheight;
+			}	
+		} 
+		
+		scale1 = (scale1>=1)?1:scale1;
+					
+		$('#wrapper').css({'-webkit-transform': 'scale('+scale1+')', 'transform': 'scale('+scale1+')', 'left':'0px'});
+		var nleft = (w-(Custemwidth*scale1))/2;
+		var ntop = (h-(Custemheight*scale1))/2;
+		$('#wrapper').css({'left': nleft+'px', 'top': '0px'});
+		
+	});
+	
+	$(window).trigger('resize');
+
+});
+
+function doOnOrientationChange() {	    
+	$(window).trigger('resize');
+}
+window.addEventListener('orientationchange', doOnOrientationChange); 
